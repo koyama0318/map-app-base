@@ -1,10 +1,27 @@
 version: "3.8"
 
 services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    volumes:
+      - map_base_db_volume:/var/lib/postgresql/data
+
   web:
     build: .
     ports:
       - "${PORT}:${PORT}"
     environment:
-      - ADDR=${ADDR}
-      - PORT=${PORT}
+      ADDR: ${ADDR}
+      PORT: ${PORT}
+      DATABASE_URL: ${DB_URL}
+    depends_on:
+      - db
+
+volumes:
+  map_base_db_volume:
