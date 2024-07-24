@@ -19,7 +19,7 @@ services:
     environment:
       ADDR: ${ADDR}
       PORT: ${PORT}
-      DATABASE_URL: ${DB_URL}
+      DATABASE_URL: ${DATABASE_URL}
     depends_on:
       - db
 

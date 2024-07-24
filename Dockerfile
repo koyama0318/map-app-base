@@ -3,6 +3,9 @@ FROM rust:latest
 WORKDIR /usr/src/map-app-base
 COPY . .
 
-RUN cargo install --path .
+RUN cargo install sqlx-cli
+RUN sqlx migrate run
 
-CMD ["map-app-base"]
+RUN cargo build
+
+CMD ["cargo", "run"]
