@@ -1,0 +1,11 @@
+[package]
+name = "map-app-base"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.38.1", features = ["full"] }
+axum = { version = "0.7.5", features = ["json"] }
+dotenv = "0.15"
+tower = "0.4.13"
+tower-http = { version = "0.5.2", features = ["trace"] }
