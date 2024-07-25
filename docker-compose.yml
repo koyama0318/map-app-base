@@ -22,6 +22,9 @@ services:
       DATABASE_URL: ${DATABASE_URL}
     depends_on:
       - db
+    working_dir: /usr/src/map-app-base
+    volumes:
+      - ./:/usr/src/map-app-base
 
 volumes:
   map_base_db_volume:

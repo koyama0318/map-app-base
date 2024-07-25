@@ -11,29 +11,13 @@ pub struct Item {
     pub description: String,
 }
 
-pub async fn get_items(Extension(pool): Extension<Arc<PgPool>>) -> Json<Vec<Item>> {
-    // TODO: sqlx実装
-    // let items = query_as!(Item, "SELECT * FROM items")
-    //     .fetch_all(&*pool)
-    //     .await
-    //     .expect("Failed to fetch items");
+// impl Item {
+//     pub async fn get_items(Extension(pool): Extension<Arc<PgPool>>) -> Json<Vec<Item>> {
+//         let items = query_as!(Item, "SELECT * FROM company1.items")
+//             .fetch_all(&*pool)
+//             .await
+//             .expect("Failed to fetch items");
 
-    let items = vec![
-        Item {
-            id: 1,
-            name: "Jone Doe".to_string(),
-            description: "this is sample text".to_string(),
-        },
-        Item {
-            id: 1,
-            name: "Jone Doe".to_string(),
-            description: "this is sample text".to_string(),
-        },
-        Item {
-            id: 1,
-            name: "Jone Doe".to_string(),
-            description: "this is sample text".to_string(),
-        },
-    ];
-    Json(items)
-}
+//         Json(items)
+//     }
+// }
