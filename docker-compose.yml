@@ -20,6 +20,7 @@ services:
       ADDR: ${ADDR}
       PORT: ${PORT}
       DATABASE_URL: ${DATABASE_URL}
+      RUST_LOG: tower_http=trace
     depends_on:
       - db
     working_dir: /usr/src/map-app-base

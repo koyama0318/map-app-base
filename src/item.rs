@@ -1,8 +1,7 @@
-use serde::{Deserialize, Serialize};
-
-use axum::{extract::Extension, Json};
-use sqlx::{query_as, PgPool};
-use std::sync::Arc;
+use serde::{
+    Deserialize,
+    Serialize,
+};
 
 #[derive(Serialize, Deserialize)]
 pub struct Item {

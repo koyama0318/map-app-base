@@ -1,24 +1,33 @@
 mod adapter;
+mod application;
 mod auth;
 mod db;
 mod domain;
 mod item;
-mod usecase;
 
-use adapter::controller::v1::{destinations_router, drivers_router, routes_router, users_router};
-use axum::{Extension, Router};
+use adapter::controller::v1::{
+    drivers_router,
+    places_router,
+    routes_router,
+    users_router,
+};
+use axum::{
+    Extension,
+    Router,
+};
 use db::establish_connection;
 use dotenv::dotenv;
-use std::{env, net::SocketAddr, sync::Arc};
+use std::env;
+use std::net::SocketAddr;
+use std::sync::Arc;
 use tower::ServiceBuilder;
 use tower_http::trace::TraceLayer;
 use tracing::info;
-use tracing_subscriber::filter::EnvFilter;
 
 // ロガーの初期化
 fn tracing_initialize() {
     tracing_subscriber::fmt()
-        .with_env_filter(EnvFilter::from_default_env())
+        .with_max_level(tracing::Level::DEBUG)
         .init();
 }
 
@@ -39,14 +48,13 @@ async fn main() {
     let app = Router::new()
         .nest("/users", users_router::users_router())
         .nest("/drivers", drivers_router::drivers_router())
-        .nest("/destinations", destinations_router::destinations_router())
+        .nest("/places", places_router::places_router())
         .nest("/routes", routes_router::routes_router())
         .layer(
             ServiceBuilder::new()
                 .layer(TraceLayer::new_for_http())
                 .layer(Extension(Arc::new(pool)))
-                .layer(Extension(secret))
-                .layer(axum::middleware::from_fn(auth::jwt_middleware)),
+                .layer(Extension(secret)), // .layer(axum::middleware::from_fn(auth::jwt_middleware)),
         );
 
     let addr = format!("{}:{}", addr, port)

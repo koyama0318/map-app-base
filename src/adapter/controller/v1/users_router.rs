@@ -1,82 +1,82 @@
-use crate::{
-    adapter::controller::v1::handle_error::handle_error,
-    domain::{
-        domain_error::DomainError,
-        user::{UnvalidatedUser, User},
-    }, usecase::repository::user_repository::UserRepository,
+use crate::adapter::controller::app_error::AppError;
+use crate::adapter::gateways::user_repository::UserRepo;
+use crate::application::usecase::users::create_user_usecase::{
+    CreateUserInput,
+    CreateUserUsecase,
 };
-use crate::{usecase::users::*}
+use crate::application::usecase::users::delete_user_usecase::{
+    DeleteUserInput,
+    DeleteUserUsecase,
+};
+use crate::application::usecase::users::get_user_list_usecase::{
+    GetUserListInput,
+    GetUserListUsecase,
+};
+use crate::application::usecase::users::get_user_usecase::{
+    GetUserInput,
+    GetUserUsecase,
+};
+use crate::domain::user::user::UnvalidatedUser;
+use crate::domain::user::user_id::UserId;
+use axum::extract::Path;
+use axum::response::{
+    IntoResponse,
+    Result,
+};
+use axum::routing::get;
 use axum::{
-    extract::{Path, Query},
-    response::IntoResponse,
-    routing::get,
-    Json, Router,
+    Json,
+    Router,
 };
-use create_user_usecase::{CreateUserInput, CreateUserUsecase};
-use delete_user_usecase::{DeleteUserInput, DeleteUserUsecase};
-use get_user_list_usecase::{GetUserListInput, GetUserListUsecase};
-use get_user_usecase::GetUserInput;
 use http::status::StatusCode;
 use tracing::info;
 
 pub fn users_router() -> Router {
-    Router::new().route("/users", get(get_user_list)).route(
-        "/users/:id",
-        get(get_user_by_id).post(create_user).delete(delete_user),
-    )
+    Router::new()
+        .route("/", get(get_user_list).post(create_user))
+        .route("/:id", get(get_user_by_id).delete(delete_user))
 }
 
-async fn get_user_list() -> impl IntoResponse {
-    let user_repo = UserRepository {};
-    let usecase = GetUserListUsecase { user_repo };
+async fn get_user_list() -> Result<impl IntoResponse, AppError> {
+    info!("get_user_list");
 
-    let result = GetUserListInput::new()
-        .and_then(usecase.execute);
+    let input = GetUserListInput::new();
+    let user_repo = UserRepo {};
+    let usecase = GetUserListUsecase::new(user_repo);
 
-    match result {
-        Ok(r) => Ok((StatusCode::OK, Json(r))),
-        Err(e) => Err(handle_error(e)),
-    }
+    let response = usecase.execute(input)?;
+    Ok((StatusCode::OK, Json(response)))
 }
 
-async fn get_user_by_id(Path(id): Path<String>) -> impl IntoResponse {
-    let input = GetUserInput { id };
-    let user_repo = UserRepository {};
-    let usecase = GetUserListUsecase { user_repo };
+async fn get_user_by_id(Path(id): Path<String>) -> Result<impl IntoResponse, AppError> {
+    info!(request.id = id, "get_user_by_id");
 
-    let result = usecase.execute(input);
+    let input = GetUserInput::new(UserId::try_from(id)?);
+    let user_repo = UserRepo {};
+    let usecase = GetUserUsecase::new(user_repo);
 
-    match result {
-        Ok(r) => Ok((StatusCode::OK, Json(r))),
-        Err(e) => Err(handle_error(e)),
-    }
+    let response = usecase.execute(input)?;
+    Ok((StatusCode::OK, Json(response)))
 }
 
-async fn create_user(
-    Query(user): Query<UnvalidatedUser>,
-    Path(id): Path<String>,
-) -> impl IntoResponse {
-    let input = CreateUserInput { unvalidated_user: user };
-    let user_repo = UserRepository {};
-    let usecase = CreateUserUsecase { user_repo };
+async fn create_user(Json(user): Json<UnvalidatedUser>) -> Result<impl IntoResponse, AppError> {
+    info!(request.body =? user, "create_user");
 
-    let result = usecase.execute(input);
+    let input = CreateUserInput::new(user);
+    let user_repo = UserRepo {};
+    let usecase = CreateUserUsecase::new(user_repo);
 
-    match result {
-        Ok(r) => Ok((StatusCode::CREATED, Json(r))),
-        Err(e) => Err(handle_error(e)),
-    }
+    let response = usecase.execute(input)?;
+    Ok((StatusCode::CREATED, Json(response)))
 }
 
-async fn delete_user(Path(id): Path<String>) -> impl IntoResponse {
-    let input = DeleteUserInput { id };
-    let user_repo = UserRepository {};
-    let usecase = DeleteUserUsecase { user_repo };
+async fn delete_user(Path(id): Path<String>) -> Result<impl IntoResponse, AppError> {
+    info!(request.id =? id, "delete_user");
 
-    let result = usecase.execute(input);
+    let input = DeleteUserInput::new(UserId::try_from(id)?);
+    let user_repo = UserRepo {};
+    let usecase = DeleteUserUsecase::new(user_repo);
 
-    match result {
-        Ok(r) => Ok((StatusCode::NO_CONTENT, Json(r))),
-        Err(e) => Err(handle_error(e)),
-    }
+    usecase.execute(input)?;
+    Ok((StatusCode::NO_CONTENT, ""))
 }

@@ -6,18 +6,19 @@ pub struct CreateUserInput {
     pub unvalidated_user: UnvalidatedUser,
 }
 
-pub struct CreateUserUsecase<R>
+pub struct CreateUserUsecase<UR>
 where
-    R: UserRepository,
+    UR: UserRepository,
 {
-    user_repo: R,
+    user_repo: UR,
 }
 
-impl<R> CreateUserUsecase<R>
+impl<UR> CreateUserUsecase<UR>
 where
-    R: UserRepository,
+    UR: UserRepository,
 {
     pub fn execute(&self, input: CreateUserInput) -> Result<User, DomainError> {
-        user::UnvalidatedUser::validate(input.unvalidated_user).and_then(self.user_repo.save)
+        user::UnvalidatedUser::validate(input.unvalidated_user)
+            .and_then(|validated_user| self.user_repo.)
     }
 }

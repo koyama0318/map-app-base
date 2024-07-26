@@ -1,20 +1,43 @@
-use crate::adapter::controller::v1::handle_error::handle_error;
-use crate::domain::domain_error::*;
-use crate::domain::route::Route;
+use anyhow::Result;
+use axum::extract::Query;
 use axum::response::IntoResponse;
 use axum::routing::get;
-use axum::{Json, Router};
+use axum::{
+    Json,
+    Router,
+};
 use http::status::StatusCode;
+use serde::Deserialize;
+use tracing::info;
+
+use crate::adapter::controller::app_error::AppError;
+use crate::adapter::gateways::route_repository::RouteRepo;
+use crate::application::usecase::routes::get_route_usecase::{
+    GetRouteInput,
+    GetRouteUsecase,
+};
+use crate::domain::route::route_search_condition::RouteSearchCondition;
+use crate::domain::value_object::point::Point;
 
 pub fn routes_router() -> Router {
-    Router::new().route("/routes", get(get_routes))
+    Router::new().route("/", get(get_route))
 }
 
-async fn get_routes() -> impl IntoResponse {
-    let result: Result<Route, DomainError> = Err(DomainError::ValidationError);
+#[derive(Debug, Deserialize)]
+struct SearchParams {
+    longitude: f64,
+    latitude: f64,
+}
 
-    match result {
-        Ok(r) => Ok((StatusCode::OK, Json(r))),
-        Err(e) => Err(handle_error(e)),
-    }
+async fn get_route(Query(params): Query<SearchParams>) -> Result<impl IntoResponse, AppError> {
+    info!(request.params =? params, "get_route");
+    let input = GetRouteInput::new(RouteSearchCondition::Point(Point::new(
+        params.longitude,
+        params.latitude,
+    )?));
+    let route_repo = RouteRepo {};
+    let usecase = GetRouteUsecase::new(route_repo);
+
+    let response = usecase.execute(input)?;
+    Ok((StatusCode::OK, Json(response)))
 }
