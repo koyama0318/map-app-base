@@ -3,14 +3,19 @@ use crate::{
     domain::{
         domain_error::DomainError,
         user::{UnvalidatedUser, User},
-    },
+    }, usecase::repository::user_repository::UserRepository,
 };
+use crate::{usecase::users::*}
 use axum::{
     extract::{Path, Query},
     response::IntoResponse,
     routing::get,
     Json, Router,
 };
+use create_user_usecase::{CreateUserInput, CreateUserUsecase};
+use delete_user_usecase::{DeleteUserInput, DeleteUserUsecase};
+use get_user_list_usecase::{GetUserListInput, GetUserListUsecase};
+use get_user_usecase::GetUserInput;
 use http::status::StatusCode;
 use tracing::info;
 
@@ -22,7 +27,11 @@ pub fn users_router() -> Router {
 }
 
 async fn get_user_list() -> impl IntoResponse {
-    let result: Result<Vec<User>, DomainError> = Ok(vec![]);
+    let user_repo = UserRepository {};
+    let usecase = GetUserListUsecase { user_repo };
+
+    let result = GetUserListInput::new()
+        .and_then(usecase.execute);
 
     match result {
         Ok(r) => Ok((StatusCode::OK, Json(r))),
@@ -31,8 +40,11 @@ async fn get_user_list() -> impl IntoResponse {
 }
 
 async fn get_user_by_id(Path(id): Path<String>) -> impl IntoResponse {
-    info!(request.id=?id, "get_user_by_id");
-    let result: Result<User, DomainError> = Err(DomainError::ValidationError);
+    let input = GetUserInput { id };
+    let user_repo = UserRepository {};
+    let usecase = GetUserListUsecase { user_repo };
+
+    let result = usecase.execute(input);
 
     match result {
         Ok(r) => Ok((StatusCode::OK, Json(r))),
@@ -41,14 +53,14 @@ async fn get_user_by_id(Path(id): Path<String>) -> impl IntoResponse {
 }
 
 async fn create_user(
-    Query(req): Query<UnvalidatedUser>,
+    Query(user): Query<UnvalidatedUser>,
     Path(id): Path<String>,
 ) -> impl IntoResponse {
-    info!(
-        request.id=?id,
-        "create_user",
-    );
-    let result: Result<User, DomainError> = Err(DomainError::ValidationError);
+    let input = CreateUserInput { unvalidated_user: user };
+    let user_repo = UserRepository {};
+    let usecase = CreateUserUsecase { user_repo };
+
+    let result = usecase.execute(input);
 
     match result {
         Ok(r) => Ok((StatusCode::CREATED, Json(r))),
@@ -57,8 +69,11 @@ async fn create_user(
 }
 
 async fn delete_user(Path(id): Path<String>) -> impl IntoResponse {
-    info!(reqeust.id=?id, "delete_user");
-    let result: Result<User, DomainError> = Err(DomainError::ValidationError);
+    let input = DeleteUserInput { id };
+    let user_repo = UserRepository {};
+    let usecase = DeleteUserUsecase { user_repo };
+
+    let result = usecase.execute(input);
 
     match result {
         Ok(r) => Ok((StatusCode::NO_CONTENT, Json(r))),

@@ -1,6 +1,4 @@
 {
-  "rust-analyzer.server.path": "rust-analyzer",
-  "rust-analyzer.cargo.runBuildScripts": true,
   "rust-analyzer.cargo.extraEnv": {
     "DATABASE_URL": "postgres://user:password@localhost:5432/map-base-db"
   }

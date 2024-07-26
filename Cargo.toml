@@ -24,3 +24,5 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 log = "0.4.22"
 
 thiserror = "1.0.63"
+
+uuid = { version = "1.10.0", features = ["serde", "v4"] }
