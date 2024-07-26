@@ -1,6 +1,5 @@
 mod adapter;
 mod application;
-mod auth;
 mod config;
 mod domain;
 
