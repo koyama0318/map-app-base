@@ -2,20 +2,14 @@ use anyhow::Result;
 use axum::extract::Query;
 use axum::response::IntoResponse;
 use axum::routing::get;
-use axum::{
-    Json,
-    Router,
-};
+use axum::{Json, Router};
 use http::status::StatusCode;
 use serde::Deserialize;
 use tracing::info;
 
 use crate::adapter::controller::app_error::AppError;
-use crate::adapter::gateways::route_repository::RouteRepo;
-use crate::application::usecase::routes::get_route_usecase::{
-    GetRouteInput,
-    GetRouteUsecase,
-};
+use crate::adapter::gateways::route_repository::RouteRepository;
+use crate::application::usecase::routes::get_route_usecase::{GetRouteInput, GetRouteUsecase};
 use crate::domain::route::route_search_condition::RouteSearchCondition;
 use crate::domain::value_object::point::Point;
 
@@ -35,7 +29,7 @@ async fn get_route(Query(params): Query<SearchParams>) -> Result<impl IntoRespon
         params.longitude,
         params.latitude,
     )?));
-    let route_repo = RouteRepo {};
+    let route_repo = RouteRepository {};
     let usecase = GetRouteUsecase::new(route_repo);
 
     let response = usecase.execute(input)?;

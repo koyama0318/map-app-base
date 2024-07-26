@@ -1,4 +1,4 @@
-use crate::application::repository::user_repository::UserRepositoryInterface;
+use crate::application::repository::user_repository::IUserRepository;
 use crate::domain::user::user_id::UserId;
 use anyhow::Result;
 
@@ -14,14 +14,14 @@ impl DeleteUserInput {
 
 pub struct DeleteUserUsecase<UR>
 where
-    UR: UserRepositoryInterface,
+    UR: IUserRepository,
 {
     user_repo: UR,
 }
 
 impl<UR> DeleteUserUsecase<UR>
 where
-    UR: UserRepositoryInterface,
+    UR: IUserRepository,
 {
     pub fn new(user_repo: UR) -> Self {
         Self { user_repo }

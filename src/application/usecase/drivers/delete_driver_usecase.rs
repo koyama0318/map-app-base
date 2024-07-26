@@ -1,4 +1,4 @@
-use crate::application::repository::driver_repository::DriverRepositoryInterface;
+use crate::application::repository::driver_repository::IDriverRepository;
 use crate::domain::driver::driver_id::DriverId;
 use anyhow::Result;
 
@@ -14,14 +14,14 @@ impl DeleteDriverInput {
 
 pub struct DeleteDriverUsecase<UR>
 where
-    UR: DriverRepositoryInterface,
+    UR: IDriverRepository,
 {
     driver_repo: UR,
 }
 
 impl<UR> DeleteDriverUsecase<UR>
 where
-    UR: DriverRepositoryInterface,
+    UR: IDriverRepository,
 {
     pub fn new(driver_repo: UR) -> Self {
         Self { driver_repo }

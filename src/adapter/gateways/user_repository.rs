@@ -1,12 +1,12 @@
-use crate::application::repository::user_repository::UserRepositoryInterface;
+use crate::application::repository::user_repository::IUserRepository;
 use crate::domain::user::user::User;
 use crate::domain::user::user_id::UserId;
 use anyhow::Result;
 
 #[derive(Debug)]
-pub struct UserRepo {}
+pub struct UserRepository {}
 
-impl UserRepositoryInterface for UserRepo {
+impl IUserRepository for UserRepository {
     fn get(&self, id: UserId) -> Result<User> {
         todo!()
     }

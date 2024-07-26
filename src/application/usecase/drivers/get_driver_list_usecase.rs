@@ -1,4 +1,4 @@
-use crate::application::repository::driver_repository::DriverRepositoryInterface;
+use crate::application::repository::driver_repository::IDriverRepository;
 use crate::domain::driver::driver::Driver;
 use anyhow::Result;
 
@@ -12,14 +12,14 @@ impl GetDriverListInput {
 
 pub struct GetDriverListUsecase<R>
 where
-    R: DriverRepositoryInterface,
+    R: IDriverRepository,
 {
     driver_repo: R,
 }
 
 impl<R> GetDriverListUsecase<R>
 where
-    R: DriverRepositoryInterface,
+    R: IDriverRepository,
 {
     pub fn new(driver_repo: R) -> Self {
         Self { driver_repo }

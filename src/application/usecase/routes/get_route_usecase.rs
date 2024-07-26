@@ -1,4 +1,4 @@
-use crate::application::repository::route_repository::RouteRepositoryInterface;
+use crate::application::repository::route_repository::IRouteRepository;
 use crate::domain::route::route::Route;
 use crate::domain::route::route_search_condition::RouteSearchCondition;
 use anyhow::Result;
@@ -15,14 +15,14 @@ impl GetRouteInput {
 
 pub struct GetRouteUsecase<RR>
 where
-    RR: RouteRepositoryInterface,
+    RR: IRouteRepository,
 {
     route_repo: RR,
 }
 
 impl<RR> GetRouteUsecase<RR>
 where
-    RR: RouteRepositoryInterface,
+    RR: IRouteRepository,
 {
     pub fn new(route_repo: RR) -> Self {
         Self { route_repo }

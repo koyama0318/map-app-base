@@ -1,4 +1,4 @@
-use crate::application::repository::place_repository::PlaceRepositoryInterface;
+use crate::application::repository::place_repository::IPlaceRepository;
 use crate::domain::place::place::Place;
 use crate::domain::place::place_search_condition::PlaceSearchCondition;
 use anyhow::Result;
@@ -15,14 +15,14 @@ impl GetPlaceInput {
 
 pub struct GetPlaceUsecase<PR>
 where
-    PR: PlaceRepositoryInterface,
+    PR: IPlaceRepository,
 {
     place_repo: PR,
 }
 
 impl<PR> GetPlaceUsecase<PR>
 where
-    PR: PlaceRepositoryInterface,
+    PR: IPlaceRepository,
 {
     pub fn new(place_repo: PR) -> Self {
         Self { place_repo }

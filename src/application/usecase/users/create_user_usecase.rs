@@ -1,8 +1,5 @@
-use crate::application::repository::user_repository::UserRepositoryInterface;
-use crate::domain::user::user::{
-    UnvalidatedUser,
-    User,
-};
+use crate::application::repository::user_repository::IUserRepository;
+use crate::domain::user::user::{UnvalidatedUser, User};
 use anyhow::Result;
 
 pub struct CreateUserInput {
@@ -17,14 +14,14 @@ impl CreateUserInput {
 
 pub struct CreateUserUsecase<UR>
 where
-    UR: UserRepositoryInterface,
+    UR: IUserRepository,
 {
     user_repo: UR,
 }
 
 impl<UR> CreateUserUsecase<UR>
 where
-    UR: UserRepositoryInterface,
+    UR: IUserRepository,
 {
     pub fn new(user_repo: UR) -> Self {
         Self { user_repo }

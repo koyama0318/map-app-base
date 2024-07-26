@@ -1,12 +1,12 @@
-use crate::application::repository::driver_repository::DriverRepositoryInterface;
+use crate::application::repository::driver_repository::IDriverRepository;
 use crate::domain::driver::driver::Driver;
 use crate::domain::driver::driver_id::DriverId;
 use anyhow::Result;
 
 #[derive(Debug)]
-pub struct DriverRepo {}
+pub struct DriverRepository {}
 
-impl DriverRepositoryInterface for DriverRepo {
+impl IDriverRepository for DriverRepository {
     fn get(&self, id: DriverId) -> Result<Driver> {
         todo!()
     }

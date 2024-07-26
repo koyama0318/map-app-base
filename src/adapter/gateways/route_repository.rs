@@ -1,12 +1,12 @@
-use crate::application::repository::route_repository::RouteRepositoryInterface;
+use crate::application::repository::route_repository::IRouteRepository;
 use crate::domain::route::route::Route;
 use crate::domain::route::route_search_condition::RouteSearchCondition;
 use anyhow::Result;
 
 #[derive(Debug)]
-pub struct RouteRepo {}
+pub struct RouteRepository {}
 
-impl RouteRepositoryInterface for RouteRepo {
+impl IRouteRepository for RouteRepository {
     fn get(&self, condition: RouteSearchCondition) -> Result<Route> {
         todo!()
     }

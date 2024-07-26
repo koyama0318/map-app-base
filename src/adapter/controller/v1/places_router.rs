@@ -1,18 +1,12 @@
 use crate::adapter::controller::app_error::AppError;
-use crate::adapter::gateways::place_repository::PlaceRepo;
-use crate::application::usecase::places::get_place_usecase::{
-    GetPlaceInput,
-    GetPlaceUsecase,
-};
+use crate::adapter::gateways::place_repository::PlaceRepository;
+use crate::application::usecase::places::get_place_usecase::{GetPlaceInput, GetPlaceUsecase};
 use crate::domain::place::place_search_condition::PlaceSearchCondition;
 use anyhow::Result;
 use axum::extract::Query;
 use axum::response::IntoResponse;
 use axum::routing::get;
-use axum::{
-    Json,
-    Router,
-};
+use axum::{Json, Router};
 use http::status::StatusCode;
 use serde::Deserialize;
 use tracing::info;
@@ -35,7 +29,7 @@ async fn get_places(Query(params): Query<SearchParams>) -> Result<impl IntoRespo
     // Ok(response)
 
     let input = GetPlaceInput::new(PlaceSearchCondition::Keyword(params.keyword));
-    let route_repo = PlaceRepo {};
+    let route_repo = PlaceRepository {};
     let usecase = GetPlaceUsecase::new(route_repo);
 
     let response = usecase.execute(input)?;

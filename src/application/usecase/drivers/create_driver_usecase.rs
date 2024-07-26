@@ -1,8 +1,5 @@
-use crate::application::repository::driver_repository::DriverRepositoryInterface;
-use crate::domain::driver::driver::{
-    Driver,
-    UnvalidatedDriver,
-};
+use crate::application::repository::driver_repository::IDriverRepository;
+use crate::domain::driver::driver::{Driver, UnvalidatedDriver};
 use anyhow::Result;
 
 pub struct CreateDriverInput {
@@ -17,14 +14,14 @@ impl CreateDriverInput {
 
 pub struct CreateDriverUsecase<UR>
 where
-    UR: DriverRepositoryInterface,
+    UR: IDriverRepository,
 {
     driver_repo: UR,
 }
 
 impl<UR> CreateDriverUsecase<UR>
 where
-    UR: DriverRepositoryInterface,
+    UR: IDriverRepository,
 {
     pub fn new(driver_repo: UR) -> Self {
         Self { driver_repo }

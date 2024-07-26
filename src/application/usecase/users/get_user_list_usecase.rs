@@ -1,4 +1,4 @@
-use crate::application::repository::user_repository::UserRepositoryInterface;
+use crate::application::repository::user_repository::IUserRepository;
 use crate::domain::user::user::User;
 use anyhow::Result;
 
@@ -12,14 +12,14 @@ impl GetUserListInput {
 
 pub struct GetUserListUsecase<R>
 where
-    R: UserRepositoryInterface,
+    R: IUserRepository,
 {
     user_repo: R,
 }
 
 impl<R> GetUserListUsecase<R>
 where
-    R: UserRepositoryInterface,
+    R: IUserRepository,
 {
     pub fn new(user_repo: R) -> Self {
         Self { user_repo }

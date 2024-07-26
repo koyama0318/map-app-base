@@ -2,7 +2,7 @@ use crate::domain::user::user::User;
 use crate::domain::user::user_id::UserId;
 use anyhow::Result;
 
-pub trait UserRepositoryInterface {
+pub trait IUserRepository {
     fn get(&self, id: UserId) -> Result<User>;
     fn get_all(&self) -> Result<Vec<User>>;
     fn save(&self, user: &User) -> Result<()>;
