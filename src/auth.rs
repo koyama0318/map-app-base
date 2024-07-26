@@ -3,12 +3,7 @@ use axum::http::Request;
 use axum::middleware::Next;
 use axum::response::Response;
 use axum::Extension;
-use jsonwebtoken::{
-    decode,
-    Algorithm,
-    DecodingKey,
-    Validation,
-};
+use jsonwebtoken::{decode, Algorithm, DecodingKey, Validation};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
