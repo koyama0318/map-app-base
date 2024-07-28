@@ -1,5 +1,5 @@
 use crate::adapter::controller::app_error::AppError;
-use crate::adapter::gateways::driver_repository::DriverRepository;
+use crate::adapter::gateways::repository::driver_repository::DriverRepository;
 use crate::application::usecase::drivers::create_driver_usecase::{
     CreateDriverInput, CreateDriverUsecase,
 };

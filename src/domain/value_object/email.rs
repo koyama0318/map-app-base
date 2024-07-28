@@ -1,17 +1,14 @@
+use anyhow::{Ok, Result};
 use serde::Serialize;
 
-#[derive(Debug)]
-pub struct Email {
-    value: String,
-}
+#[derive(Debug, Clone)]
+pub struct Email(pub String);
 
-impl Email {
-    pub fn new(value: String) -> Self {
-        Self { value }
-    }
+impl TryFrom<String> for Email {
+    type Error = anyhow::Error;
 
-    pub fn value(&self) -> &String {
-        &self.value
+    fn try_from(value: String) -> Result<Self> {
+        Ok(Self(value))
     }
 }
 
@@ -20,6 +17,6 @@ impl Serialize for Email {
     where
         S: serde::Serializer,
     {
-        serializer.serialize_str(self.value())
+        serializer.serialize_str(&self.0)
     }
 }

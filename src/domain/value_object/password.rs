@@ -1,17 +1,14 @@
+use anyhow::{Ok, Result};
 use serde::Serialize;
 
-#[derive(Debug)]
-pub struct Password {
-    value: String,
-}
+#[derive(Debug, Clone)]
+pub struct Password(pub String);
 
-impl Password {
-    pub fn new(value: String) -> Self {
-        Self { value }
-    }
+impl TryFrom<String> for Password {
+    type Error = anyhow::Error;
 
-    pub fn value(&self) -> &String {
-        &self.value
+    fn try_from(value: String) -> Result<Self> {
+        Ok(Self(value))
     }
 }
 
@@ -20,6 +17,6 @@ impl Serialize for Password {
     where
         S: serde::Serializer,
     {
-        serializer.serialize_str(self.value())
+        serializer.serialize_str(&self.0)
     }
 }

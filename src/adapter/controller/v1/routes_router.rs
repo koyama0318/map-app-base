@@ -8,7 +8,7 @@ use serde::Deserialize;
 use tracing::info;
 
 use crate::adapter::controller::app_error::AppError;
-use crate::adapter::gateways::route_repository::RouteRepository;
+use crate::adapter::gateways::repository::route_repository::RouteRepository;
 use crate::application::usecase::routes::get_route_usecase::{GetRouteInput, GetRouteUsecase};
 use crate::domain::route::route_search_condition::RouteSearchCondition;
 use crate::domain::value_object::point::Point;

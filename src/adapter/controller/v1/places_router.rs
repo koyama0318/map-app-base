@@ -1,5 +1,5 @@
 use crate::adapter::controller::app_error::AppError;
-use crate::adapter::gateways::place_repository::PlaceRepository;
+use crate::adapter::gateways::repository::place_repository::PlaceRepository;
 use crate::application::usecase::places::get_place_usecase::{GetPlaceInput, GetPlaceUsecase};
 use crate::domain::place::place_search_condition::PlaceSearchCondition;
 use anyhow::Result;

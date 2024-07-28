@@ -3,10 +3,7 @@ use crate::domain::value_object::email::Email;
 use crate::domain::value_object::password::Password;
 use crate::domain::value_object::point::Point;
 use anyhow::Result;
-use serde::{
-    Deserialize,
-    Serialize,
-};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UnvalidatedUser {
@@ -21,8 +18,8 @@ impl UnvalidatedUser {
         let point = Point::new(user.longitude, user.latitude)?;
         Ok(User::new(
             UserId::default(),
-            Email::new(user.email),
-            Password::new(user.password),
+            Email::try_from(user.email)?,
+            Password::try_from(user.password)?,
             point,
         ))
     }

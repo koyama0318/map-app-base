@@ -1,5 +1,5 @@
 use crate::adapter::controller::app_error::AppError;
-use crate::adapter::gateways::user_repository::UserRepository;
+use crate::adapter::gateways::repository::user_repository::UserRepository;
 use crate::application::usecase::users::create_user_usecase::{CreateUserInput, CreateUserUsecase};
 use crate::application::usecase::users::delete_user_usecase::{DeleteUserInput, DeleteUserUsecase};
 use crate::application::usecase::users::get_user_list_usecase::{

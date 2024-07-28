@@ -3,10 +3,7 @@ use crate::domain::value_object::email::Email;
 use crate::domain::value_object::password::Password;
 use crate::domain::value_object::point::Point;
 use anyhow::Result;
-use serde::{
-    Deserialize,
-    Serialize,
-};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UnvalidatedDriver {
@@ -21,8 +18,8 @@ impl UnvalidatedDriver {
         let address = Point::new(driver.longitude, driver.latitude)?;
         Ok(Driver::new(
             DriverId::default(),
-            Email::new(driver.email),
-            Password::new(driver.password),
+            Email::try_from(driver.email)?,
+            Password::try_from(driver.password)?,
             address,
         ))
     }
@@ -37,7 +34,7 @@ pub struct Driver {
 }
 
 impl Driver {
-    fn new(id: DriverId, email: Email, password: Password, point: Point) -> Self {
+    pub fn new(id: DriverId, email: Email, password: Password, point: Point) -> Self {
         Driver {
             id,
             email,
