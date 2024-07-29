@@ -28,7 +28,7 @@ where
         Self { place_repo }
     }
 
-    pub fn execute(&self, input: GetPlaceInput) -> Result<Place> {
-        self.place_repo.get(input.condition)
+    pub fn execute(&self, input: GetPlaceInput) -> Result<Vec<Place>> {
+        self.place_repo.get_list(input.condition)
     }
 }

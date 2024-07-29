@@ -1,4 +1,4 @@
-use crate::adapter::gateways::api_data::route::RouteData;
+use crate::adapter::gateways::api_data::route_data::RouteData;
 use crate::application::repository::route_repository::IRouteRepository;
 use crate::domain::route::route::Route;
 use crate::domain::route::route_search_condition::RouteSearchCondition;

@@ -28,8 +28,8 @@ async fn get_user_list() -> Result<impl IntoResponse, AppError> {
     let user_repo = UserRepository {};
     let usecase = GetUserListUsecase::new(user_repo);
 
-    let response = usecase.execute(input)?;
-    Ok((StatusCode::OK, Json(response)))
+    let res = usecase.execute(input)?;
+    Ok((StatusCode::OK, Json(res)))
 }
 
 async fn get_user_by_id(Path(id): Path<String>) -> Result<impl IntoResponse, AppError> {
@@ -39,8 +39,8 @@ async fn get_user_by_id(Path(id): Path<String>) -> Result<impl IntoResponse, App
     let user_repo = UserRepository {};
     let usecase = GetUserUsecase::new(user_repo);
 
-    let response = usecase.execute(input)?;
-    Ok((StatusCode::OK, Json(response)))
+    let res = usecase.execute(input)?;
+    Ok((StatusCode::OK, Json(res)))
 }
 
 async fn create_user(Json(user): Json<UnvalidatedUser>) -> Result<impl IntoResponse, AppError> {
@@ -50,8 +50,8 @@ async fn create_user(Json(user): Json<UnvalidatedUser>) -> Result<impl IntoRespo
     let user_repo = UserRepository {};
     let usecase = CreateUserUsecase::new(user_repo);
 
-    let response = usecase.execute(input)?;
-    Ok((StatusCode::CREATED, Json(response)))
+    let res = usecase.execute(input)?;
+    Ok((StatusCode::CREATED, Json(res)))
 }
 
 async fn delete_user(Path(id): Path<String>) -> Result<impl IntoResponse, AppError> {

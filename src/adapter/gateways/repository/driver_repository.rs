@@ -1,4 +1,4 @@
-use crate::adapter::gateways::db_data::driver::DriverData;
+use crate::adapter::gateways::db_data::driver_data::DriverData;
 use crate::application::repository::driver_repository::IDriverRepository;
 use crate::domain::driver::driver::Driver;
 use crate::domain::driver::driver_id::DriverId;

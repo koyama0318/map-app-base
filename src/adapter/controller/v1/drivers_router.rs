@@ -31,8 +31,8 @@ async fn get_driver_list() -> Result<impl IntoResponse, AppError> {
     let user_repo = DriverRepository {};
     let usecase = GetDriverListUsecase::new(user_repo);
 
-    let response = usecase.execute(input)?;
-    Ok((StatusCode::OK, Json(response)))
+    let res = usecase.execute(input)?;
+    Ok((StatusCode::OK, Json(res)))
 }
 
 async fn get_driver_by_id(Path(id): Path<String>) -> Result<impl IntoResponse, AppError> {
@@ -41,8 +41,8 @@ async fn get_driver_by_id(Path(id): Path<String>) -> Result<impl IntoResponse, A
     let user_repo = DriverRepository {};
     let usecase = GetDriverUsecase::new(user_repo);
 
-    let response = usecase.execute(input)?;
-    Ok((StatusCode::OK, Json(response)))
+    let res = usecase.execute(input)?;
+    Ok((StatusCode::OK, Json(res)))
 }
 
 async fn create_driver(Json(user): Json<UnvalidatedDriver>) -> Result<impl IntoResponse, AppError> {
@@ -51,8 +51,8 @@ async fn create_driver(Json(user): Json<UnvalidatedDriver>) -> Result<impl IntoR
     let user_repo = DriverRepository {};
     let usecase = CreateDriverUsecase::new(user_repo);
 
-    let response = usecase.execute(input)?;
-    Ok((StatusCode::CREATED, Json(response)))
+    let res = usecase.execute(input)?;
+    Ok((StatusCode::CREATED, Json(res)))
 }
 
 async fn delete_driver(Path(id): Path<String>) -> Result<impl IntoResponse, AppError> {

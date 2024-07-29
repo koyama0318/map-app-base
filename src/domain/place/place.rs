@@ -10,10 +10,17 @@ pub struct Place {
     name: String,
     /// 地点
     point: Point,
+    // 住所
+    address: String,
 }
 
 impl Place {
-    pub fn new(id: PlaceId, name: String, point: Point) -> Self {
-        Self { id, name, point }
+    pub fn new(id: PlaceId, name: String, point: Point, address: String) -> Self {
+        Self {
+            id,
+            name,
+            point,
+            address,
+        }
     }
 }

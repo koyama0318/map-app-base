@@ -32,6 +32,6 @@ async fn get_route(Query(params): Query<SearchParams>) -> Result<impl IntoRespon
     let route_repo = RouteRepository {};
     let usecase = GetRouteUsecase::new(route_repo);
 
-    let response = usecase.execute(input)?;
-    Ok((StatusCode::OK, Json(response)))
+    let res = usecase.execute(input)?;
+    Ok((StatusCode::OK, Json(res)))
 }

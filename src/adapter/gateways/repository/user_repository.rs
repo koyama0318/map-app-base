@@ -1,4 +1,4 @@
-use crate::adapter::gateways::db_data::user::UserData;
+use crate::adapter::gateways::db_data::user_data::UserData;
 use crate::application::repository::user_repository::IUserRepository;
 use crate::domain::user::user::User;
 use crate::domain::user::user_id::UserId;

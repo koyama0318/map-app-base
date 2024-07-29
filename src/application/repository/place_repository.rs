@@ -3,5 +3,5 @@ use crate::domain::place::place_search_condition::PlaceSearchCondition;
 use anyhow::Result;
 
 pub trait IPlaceRepository {
-    fn get(&self, search_condition: PlaceSearchCondition) -> Result<Place>;
+    fn get_list(&self, search_condition: PlaceSearchCondition) -> Result<Vec<Place>>;
 }
