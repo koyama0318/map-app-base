@@ -22,7 +22,6 @@ pub struct PlaceData {
     pub geometry: Geometry,
     pub name: String,
     pub place_id: String,
-    pub types: Vec<String>,
     pub plus_code: PlusCode,
     pub vicinity: String,
 }
