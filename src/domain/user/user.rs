@@ -27,10 +27,10 @@ impl UnvalidatedUser {
 
 #[derive(Serialize)]
 pub struct User {
-    id: UserId,
-    email: Email,
-    password: Password,
-    point: Point,
+    pub id: UserId,
+    pub email: Email,
+    pub password: Password,
+    pub point: Point,
 }
 
 impl User {

@@ -53,23 +53,7 @@ impl IPlaceRepository for PlaceRepository {
     }
     "#;
 
-        let api_response: PlaceResponse = from_str(json_data)?;
-        if api_response.status != "OK" {
-            bail!("Places API error: {}", api_response.status);
-        }
-
-        let places: Vec<Place> = api_response
-            .results
-            .into_iter()
-            .filter_map(|place| {
-                println!("{:?}", place);
-                let id = PlaceId::try_from(place.place_id).ok()?;
-                let point =
-                    Point::new(place.geometry.location.lat, place.geometry.location.lng).ok()?;
-                let address = place.plus_code.compound_code + &place.vicinity;
-                Some(Place::new(id, place.name, point, address))
-            })
-            .collect();
+        let places = PlaceResponse::deserialize_to_domain(json_data)?;
         Ok(places)
     }
 }

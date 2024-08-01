@@ -27,10 +27,10 @@ impl UnvalidatedDriver {
 
 #[derive(Serialize)]
 pub struct Driver {
-    id: DriverId,
-    email: Email,
-    password: Password,
-    point: Point,
+    pub id: DriverId,
+    pub email: Email,
+    pub password: Password,
+    pub point: Point,
 }
 
 impl Driver {
